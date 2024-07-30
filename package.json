@@ -1,0 +1,9 @@
+{
+  "type": "module",
+  "dependencies": {
+    "ansi-escapes": "^7.0.0",
+    "axios": "^1.7.2",
+    "debounce": "^2.1.0",
+    "meow": "^13.2.0"
+  }
+}
