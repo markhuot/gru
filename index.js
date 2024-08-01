@@ -10,6 +10,7 @@ const cli = meow(`
     Options
         --concurrency, -c  The number of concurrent workers to spawn
         --header, -H       Add a header to the request
+        --no-cache         Append a random query string to each URL to force a cache miss
 `, {
     importMeta: import.meta,
     flags: {
@@ -22,6 +23,10 @@ const cli = meow(`
             type: 'string',
             shortFlag: 'H',
             isMultiple: true,
+        },
+        noCache: {
+            type: 'boolean',
+            default: false,
         }
     }
 });
@@ -59,9 +64,9 @@ function updateLog(index, message) {
     }
 }
 setInterval(updateLog, 1000);
-
 function cacheKey(index) {
-    return [cacheDate, index, cacheRandom].join('-');
+    const date = cli.flags.noCache ? new Date().getTime() : cacheDate;
+    return [date, index, cacheRandom].join('-');
 }
 
 async function getPage(index, url) {
